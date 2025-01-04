@@ -57,7 +57,7 @@ const Score = 0;
 
 const StartQuiz = () => {
   currentQuestionIndex = 0;
-  score = 0;
+  score;
 };
 
 const questionElement = document.getElementById("question");
@@ -65,12 +65,12 @@ const answerButton = document.getElementById("answer-btns");
 const nextButton = document.getElementById("next");
 // console.log(answerButton.firstChild);
 
-// function resetState() {
-//   nextButton.style.display = "none";
-//   while (answerButton.firstChild) {
-//     answerButton.removeChild(answerButton.firstChild);
-//   }
-// }
+function resetState() {
+  nextButton.style.display = "none";
+  while (answerButton.firstChild) {
+    answerButton.removeChild(answerButton.firstChild);
+  }
+}
 
 function showQuestion() {
   // resetState();
