@@ -87,7 +87,7 @@ const selectAnswer = (e) => {
   nextButton.style.display = "block";
 
   ApplyNext();
-  // selectBtn.classList.add("disabled");
+  selectBtn.classList.add("disabled");
   Array.from(Answers.children).forEach((button) => {
     if (button.classList.correct === "true") {
       button.classList.add("correct");
