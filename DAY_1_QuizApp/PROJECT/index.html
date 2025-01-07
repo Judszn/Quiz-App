@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-gray-900 m-2">
+    <div
+      class="bg-gray-800 py-3 font-semibold flex justify-around m-1 max-w-full text-white items-center"
+    >
+      <h1 class="lg:text-3xl text-xl">Test Prep</h1>
+      <button
+        class="border-2 rounded-md m-1 px-5 py-2 text-gray-500 bg-green-200 border-green-600 hidden lg:block"
+      >
+        Info
+      </button>
+    </div>
+    <div
+      class="max-w-6xl mx-auto rounded-md mt-10 flex items-center bg-gray-700 py-8 px-5 justify-center text-white text-xl lg:text-2xl border border-gray-800"
+      id="currentSubject"
+    >
+      <h1>Choose a field</h1>
+    </div>
+    <div
+      class="max-w-6xl mx-auto flex flex-row justify-between items-center mt-1 gap-x-2 flex-row text-sm lg:text-lg"
+    >
+      <div
+        class="text-white bg-blue-700 rounded-md p-3 py-5 w-full text-center cursor-pointer"
+        id="chemistry"
+        value="chemistry"
+      >
+        Chemistry
+      </div>
+      <div
+        class="text-white bg-pink-700 rounded-md p-3 py-5 w-full text-center cursor-pointer"
+        id="physics"
+        value="physics"
+      >
+        Physics
+      </div>
+      <div
+        class="text-white bg-green-700 rounded-md p-3 py-5 w-full text-center cursor-pointer"
+        id="biology"
+        value="biology"
+      >
+        Biology
+      </div>
+    </div>
+    <div
+      class="max-w-6xl mx-auto flex justify-between flex-col lg:flex-row md:flex-row mt-20 gap-x-3 hidden"
+      id="questionSection"
+    >
+      <div class="w-full" id="questionField">
+        <div class="bg-gray-100 rounded-sm h-[420px] px-7 py-7 text-gray-600">
+          <h2
+            class="text-2xl border-b border-gray-300 pb-4"
+            id="currentQuestion"
+          >
+            Your Question Goes Here
+          </h2>
+          <div class="w-full text-gray-900 text-lg mt-2" id="answerButtons">
+            <button
+              class="w-full text-left my-4 bg-gray-200 p-2 rounded-sm btn"
+            >
+              1
+            </button>
+            <button
+              class="w-full text-left my-4 bg-gray-200 p-2 rounded-sm btn"
+            >
+              2
+            </button>
+            <button
+              class="w-full text-left my-4 bg-gray-200 p-2 rounded-sm btn"
+            >
+              3
+            </button>
+            <button
+              class="w-full text-left my-4 bg-gray-200 p-2 rounded-sm btn"
+            >
+              4
+            </button>
+          </div>
+        </div>
+        <div class="w-full text-right text-white">
+          <button
+            class="bg-blue-600 px-10 py-2 mt-4 rounded-md"
+            id="nextButton"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div class="resultField hidden lg:flex w-2/3 flex flex-col gap-y-3">
+        <div class="flex justify-center bg-gray-100 rounded-md py-4">
+          <h1 class="text-blue-600 text-3xl font-bold text-center mx-1 my-3">
+            Score:
+          </h1>
+          <h1
+            class="text-blue-600 text-3xl font-bold text-center my-3 currentScore"
+          >
+            0
+          </h1>
+        </div>
+        <!-- <div class="p-3 bg-gray-100 rounded-md text-lg">
+          <h2 class="ml-4">Statistics</h2>
+        </div> -->
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
