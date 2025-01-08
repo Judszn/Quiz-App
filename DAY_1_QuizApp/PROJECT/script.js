@@ -50,12 +50,11 @@ const Questions = [
     label: "biology",
   },
   {
-    question: `What is the term for the 'building blocks of life'?
-`,
+    question: "What is the term for the building blocks of life?",
     answers: [
-      { text: "Cells ", correct: true },
+      { text: "Cells", correct: true },
       { text: "molecules", correct: false },
-      { text: "tissue ", correct: true },
+      { text: "tissue", correct: false },
       { text: "organs", correct: false },
     ],
     label: "biology",
@@ -177,9 +176,24 @@ const physicsButton = document.getElementById("physics");
 const biologyButton = document.getElementById("biology");
 const questionSection = document.getElementById("questionSection");
 const currentSubject = document.getElementById("currentSubject");
+const scoreElement = document.getElementById("Score");
+const scoreValue = document.getElementById("scoreValue");
+let currentQuestionIndex = 0;
+let score = 0;
+scoreValue.innerHTML = score;
+const startQuiz = () => {
+  score = 0;
+  currentQuestionIndex = 0;
+
+  showBiology();
+  showChemistry();
+  showPhysics();
+};
 
 const resetState = () => {
   next.style.display = "none";
+  scoreElement.style.display = "none";
+
   while (displayAnswers.firstChild) {
     displayAnswers.removeChild(displayAnswers.firstChild);
   }
@@ -189,6 +203,7 @@ const showChemistry = () => {
   resetState();
   const chemistryQuestions = Questions.filter((question) => {
     if (question.label === "chemistry") {
+      currentSubject.innerHTML = question.label;
       return question;
     }
   });
@@ -204,45 +219,111 @@ const showChemistry = () => {
       button.innerHTML = answer.text;
       button.classList.add("btn");
       displayAnswers.appendChild(button);
+      button.addEventListener("click", showAnswer);
+      if (answer.correct) {
+        button.dataset.correct = answer.correct;
+      }
+      button.addEventListener("click", showAnswer);
+      button.addEventListener("click", nextQuestion);
     });
   }
   showQuestion();
 };
 
 const showPhysics = () => {
+  resetState();
   const physicsQuestions = Questions.filter((question) => {
     if (question.label === "physics") {
+      currentSubject.innerHTML = question.label;
       return question;
     }
   });
 
   questionSection.style.display = "flex";
   function showQuestion() {
-    const Question = currentQuestion;
-    Question.innerHTML = physicsQuestions[currentQuestionIndex].question;
-
-    // currentSubject.innerHTML = subject;
+    const Question = physicsQuestions[currentQuestionIndex];
+    currentQuestion.innerHTML =
+      currentQuestionIndex + 1 + ". " + Question.question;
+    Question.answers.forEach((answer) => {
+      const button = document.createElement("button");
+      button.innerHTML = answer.text;
+      button.classList.add("btn");
+      displayAnswers.appendChild(button);
+      button.addEventListener("click", showAnswer);
+      if (answer.correct) {
+        button.dataset.correct = answer.correct;
+      }
+      button.addEventListener("click", showAnswer);
+      button.addEventListener("click", nextQuestion);
+    });
   }
   showQuestion();
 };
+
 const showBiology = () => {
+  resetState();
   const biologyQuestions = Questions.filter((question) => {
     if (question.label === "biology") {
+      currentSubject.innerHTML = question.label;
       return question;
     }
   });
+
+  currentQuestionIndex = 0;
+
+  showQuestion();
   questionSection.style.display = "flex";
   function showQuestion() {
-    const Question = currentQuestion;
-    Question.innerHTML = biologyQuestions[currentQuestionIndex].question;
+    resetState();
+    const Question = biologyQuestions[currentQuestionIndex];
 
-    // currentSubject.innerHTML = subject;
+    currentQuestion.innerHTML =
+      currentQuestionIndex + 1 + ". " + Question.question;
+
+    Question.answers.forEach((answer) => {
+      const button = document.createElement("button");
+      button.innerHTML = answer.text;
+      button.classList.add("btn");
+      displayAnswers.appendChild(button);
+
+      if (answer.correct) {
+        button.dataset.correct = answer.correct;
+      }
+      button.addEventListener("click", showAnswer);
+      button.addEventListener("click", nextQuestion);
+    });
   }
-  showQuestion();
 };
+function showAnswer(e) {
+  const selectedAnswer = e.target;
+  const isCorrect = selectedAnswer.dataset.correct === "true";
+  if (isCorrect) {
+    selectedAnswer.classList.add("correct");
+    score + 1;
+  } else {
+    selectedAnswer.classList.add("incorrect");
+  }
+  Array.from(displayAnswers.children).forEach((button) => {
+    if (button.dataset.correct === "true") {
+      button.classList.add("correct");
+    }
+    button.disabled = "true";
+  });
+}
 
+function nextQuestion() {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < Questions.label === "biology") {
+    showBiology();
+    scoreElement.style.display = "block";
+  } else {
+    startQuiz();
+  }
+}
+
+nextQuestion();
+
+startQuiz();
 chemistryButton.addEventListener("click", showChemistry);
 physicsButton.addEventListener("click", showPhysics);
 biologyButton.addEventListener("click", showBiology);
-let Subject = "biology";
-let currentQuestionIndex = 0;

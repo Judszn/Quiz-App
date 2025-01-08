@@ -7,13 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="bg-gray-900 m-2">
+  <body class="bg-gray-900 m-2 lg:m-0">
     <div
-      class="bg-gray-800 py-3 font-semibold flex justify-around m-1 max-w-full text-white items-center"
+      class="bg-gray-800 py-3 font-semibold flex justify-around max-w-full text-white items-center"
     >
       <h1 class="lg:text-3xl text-xl">Test Prep</h1>
       <button
-        class="border-2 rounded-md m-1 px-5 py-2 text-gray-500 bg-green-200 border-green-600 hidden lg:block"
+        class="border-2 rounded-full m-1 px-5 py-2 text-gray-100 bg-green-400 border-green-600 hidden lg:block"
       >
         Info
       </button>
@@ -61,7 +61,10 @@
           >
             Your Question Goes Here
           </h2>
-          <div class="w-full text-gray-900 text-lg mt-2" id="answerButtons">
+          <div
+            class="w-full text-gray-900 text-lg mt-2 mb-20"
+            id="answerButtons"
+          >
             <button
               class="w-full text-left my-4 bg-gray-200 p-2 rounded-sm btn"
             >
@@ -94,16 +97,14 @@
         </div>
       </div>
 
-      <div class="resultField hidden lg:flex w-2/3 flex flex-col gap-y-3">
-        <div class="flex justify-center bg-gray-100 rounded-md py-4">
-          <h1 class="text-blue-600 text-3xl font-bold text-center mx-1 my-3">
-            Score:
-          </h1>
-          <h1
-            class="text-blue-600 text-3xl font-bold text-center my-3 currentScore"
-          >
-            0
-          </h1>
+      <div
+        class="resultField hidden lg:flex w-2/3 flex flex-col gap-y-3 border-2 border-blue-600 rounded-lg p-2"
+      >
+        <div
+          class="flex justify-center bg-gray-100 rounded-md py-4 text-blue-600 text-3xl font-bold text-center mx-1 my-3"
+          id="Score"
+        >
+          <h1>Score: <span id="scoreValue">0</span></h1>
         </div>
         <!-- <div class="p-3 bg-gray-100 rounded-md text-lg">
           <h2 class="ml-4">Statistics</h2>

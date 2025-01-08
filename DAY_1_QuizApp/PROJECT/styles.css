@@ -16,7 +16,24 @@
   margin: 5px;
 }
 
-.btn:hover {
+.btn:hover:not([disabled]) {
   background-color: rgb(24, 124, 231);
   color: aliceblue;
+}
+.btn:active.btn:hover:not([disabled]) {
+  background-color: rgb(247, 247, 247);
+  color: #222;
+}
+.correct {
+  background-color: rgb(133, 241, 133);
+  color: #222;
+}
+
+.incorrect {
+  background-color: rgb(244, 147, 147);
+  color: #222;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
 }
