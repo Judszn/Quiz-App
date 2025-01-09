@@ -219,12 +219,12 @@ const showChemistry = () => {
       button.innerHTML = answer.text;
       button.classList.add("btn");
       displayAnswers.appendChild(button);
-      button.addEventListener("click", showAnswer);
-      if (answer.correct) {
-        button.dataset.correct = answer.correct;
-      }
-      button.addEventListener("click", showAnswer);
-      button.addEventListener("click", nextQuestion);
+
+      // if (answer.correct) {
+      //   button.dataset.correct = answer.correct;
+      // }
+      // button.addEventListener("click", showAnswer);
+      // button.addEventListener("click", nextQuestion);
     });
   }
   showQuestion();
@@ -249,12 +249,12 @@ const showPhysics = () => {
       button.innerHTML = answer.text;
       button.classList.add("btn");
       displayAnswers.appendChild(button);
-      button.addEventListener("click", showAnswer);
-      if (answer.correct) {
-        button.dataset.correct = answer.correct;
-      }
-      button.addEventListener("click", showAnswer);
-      button.addEventListener("click", nextQuestion);
+
+      // if (answer.correct) {
+      //   button.dataset.correct = answer.correct;
+      // }
+      // button.addEventListener("click", showAnswer);
+      // button.addEventListener("click", nextQuestion);
     });
   }
   showQuestion();
