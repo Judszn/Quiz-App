@@ -220,11 +220,11 @@ const showChemistry = () => {
       button.classList.add("btn");
       displayAnswers.appendChild(button);
 
-      // if (answer.correct) {
-      //   button.dataset.correct = answer.correct;
-      // }
-      // button.addEventListener("click", showAnswer);
-      // button.addEventListener("click", nextQuestion);
+      if (answer.correct) {
+        button.dataset.correct = answer.correct;
+      }
+      button.addEventListener("click", showAnswer);
+      button.addEventListener("click", nextQuestion);
     });
   }
   showQuestion();
@@ -238,9 +238,11 @@ const showPhysics = () => {
       return question;
     }
   });
-
+  showQuestion();
   questionSection.style.display = "flex";
   function showQuestion() {
+    resetState();
+
     const Question = physicsQuestions[currentQuestionIndex];
     currentQuestion.innerHTML =
       currentQuestionIndex + 1 + ". " + Question.question;
@@ -250,14 +252,13 @@ const showPhysics = () => {
       button.classList.add("btn");
       displayAnswers.appendChild(button);
 
-      // if (answer.correct) {
-      //   button.dataset.correct = answer.correct;
-      // }
-      // button.addEventListener("click", showAnswer);
-      // button.addEventListener("click", nextQuestion);
+      if (answer.correct) {
+        button.dataset.correct = answer.correct;
+      }
+      button.addEventListener("click", showAnswer);
+      button.addEventListener("click", nextQuestion);
     });
   }
-  showQuestion();
 };
 
 const showBiology = () => {
@@ -268,8 +269,6 @@ const showBiology = () => {
       return question;
     }
   });
-
-  currentQuestionIndex = 0;
 
   showQuestion();
   questionSection.style.display = "flex";
@@ -290,7 +289,6 @@ const showBiology = () => {
         button.dataset.correct = answer.correct;
       }
       button.addEventListener("click", showAnswer);
-      button.addEventListener("click", nextQuestion);
     });
   }
 };
@@ -299,7 +297,7 @@ function showAnswer(e) {
   const isCorrect = selectedAnswer.dataset.correct === "true";
   if (isCorrect) {
     selectedAnswer.classList.add("correct");
-    score + 1;
+    score++;
   } else {
     selectedAnswer.classList.add("incorrect");
   }
@@ -307,8 +305,9 @@ function showAnswer(e) {
     if (button.dataset.correct === "true") {
       button.classList.add("correct");
     }
-    button.disabled = "true";
+    button.disabled = true;
   });
+  selectedAnswer.addEventListener("click", nextQuestion);
 }
 
 function nextQuestion() {
@@ -320,8 +319,6 @@ function nextQuestion() {
     startQuiz();
   }
 }
-
-nextQuestion();
 
 startQuiz();
 chemistryButton.addEventListener("click", showChemistry);
