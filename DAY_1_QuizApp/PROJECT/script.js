@@ -160,13 +160,174 @@ const Questions = [
 `,
     answers: [
       { text: " Biology ", correct: false },
-      { text: "Physics", correct: true },
-      { text: "Chemistry", correct: false },
+      { text: "Physics", correct: false },
+      { text: "Chemistry", correct: true },
       { text: " Geology", correct: false },
     ],
     label: "chemistry",
   },
 ];
+
+const additionalQuestions = [
+  // Additional Biology Questions
+  {
+    question: "What is the process of cellular division called?",
+    answers: [
+      { text: "Mitosis", correct: true },
+      { text: "Osmosis", correct: false },
+      { text: "Diffusion", correct: false },
+      { text: "Respiration", correct: false },
+    ],
+    label: "biology",
+  },
+  {
+    question: "Which organelle is known as the 'powerhouse' of the cell?",
+    answers: [
+      { text: "Nucleus", correct: false },
+      { text: "Mitochondria", correct: true },
+      { text: "Endoplasmic Reticulum", correct: false },
+      { text: "Golgi Apparatus", correct: false },
+    ],
+    label: "biology",
+  },
+  {
+    question: "What is the main function of white blood cells?",
+    answers: [
+      { text: "Transport oxygen", correct: false },
+      { text: "Fight infections", correct: true },
+      { text: "Produce hormones", correct: false },
+      { text: "Carry nutrients", correct: false },
+    ],
+    label: "biology",
+  },
+  {
+    question: "Which of these is not a type of blood vessel?",
+    answers: [
+      { text: "Arteries", correct: false },
+      { text: "Veins", correct: false },
+      { text: "Capillaries", correct: false },
+      { text: "Lymphatics", correct: true },
+    ],
+    label: "biology",
+  },
+  {
+    question: "What is the process by which plants make their own food?",
+    answers: [
+      { text: "Photosynthesis", correct: true },
+      { text: "Respiration", correct: false },
+      { text: "Fermentation", correct: false },
+      { text: "Digestion", correct: false },
+    ],
+    label: "biology",
+  },
+
+  // Additional Physics Questions
+  {
+    question: "What is the SI unit of force?",
+    answers: [
+      { text: "Watt", correct: false },
+      { text: "Newton", correct: true },
+      { text: "Joule", correct: false },
+      { text: "Pascal", correct: false },
+    ],
+    label: "physics",
+  },
+  {
+    question: "Which law states that energy cannot be created or destroyed?",
+    answers: [
+      { text: "Newton's First Law", correct: false },
+      { text: "Law of Conservation of Energy", correct: true },
+      { text: "Ohm's Law", correct: false },
+      { text: "Boyle's Law", correct: false },
+    ],
+    label: "physics",
+  },
+  {
+    question: "What is the speed of light in vacuum?",
+    answers: [
+      { text: "299,792,458 m/s", correct: true },
+      { text: "300,000,000 m/s", correct: false },
+      { text: "3,000,000 m/s", correct: false },
+      { text: "30,000 m/s", correct: false },
+    ],
+    label: "physics",
+  },
+  {
+    question: "Which particle has a negative charge?",
+    answers: [
+      { text: "Proton", correct: false },
+      { text: "Neutron", correct: false },
+      { text: "Electron", correct: true },
+      { text: "Positron", correct: false },
+    ],
+    label: "physics",
+  },
+  {
+    question: "What is the unit of electrical resistance?",
+    answers: [
+      { text: "Volt", correct: false },
+      { text: "Ampere", correct: false },
+      { text: "Ohm", correct: true },
+      { text: "Watt", correct: false },
+    ],
+    label: "physics",
+  },
+
+  // Additional Chemistry Questions
+  {
+    question: "What is the atomic number of Carbon?",
+    answers: [
+      { text: "12", correct: false },
+      { text: "6", correct: true },
+      { text: "14", correct: false },
+      { text: "8", correct: false },
+    ],
+    label: "chemistry",
+  },
+  {
+    question: "Which of these is a noble gas?",
+    answers: [
+      { text: "Nitrogen", correct: false },
+      { text: "Oxygen", correct: false },
+      { text: "Helium", correct: true },
+      { text: "Chlorine", correct: false },
+    ],
+    label: "chemistry",
+  },
+  {
+    question: "What is the pH of a neutral solution?",
+    answers: [
+      { text: "0", correct: false },
+      { text: "7", correct: true },
+      { text: "14", correct: false },
+      { text: "1", correct: false },
+    ],
+    label: "chemistry",
+  },
+  {
+    question: "Which element is a liquid at room temperature?",
+    answers: [
+      { text: "Iron", correct: false },
+      { text: "Mercury", correct: true },
+      { text: "Copper", correct: false },
+      { text: "Sodium", correct: false },
+    ],
+    label: "chemistry",
+  },
+  {
+    question: "What type of bond is formed by sharing electrons?",
+    answers: [
+      { text: "Ionic", correct: false },
+      { text: "Covalent", correct: true },
+      { text: "Metallic", correct: false },
+      { text: "Hydrogen", correct: false },
+    ],
+    label: "chemistry",
+  }
+];
+
+// Combine existing questions with additional questions
+Questions.push(...additionalQuestions);
 
 const currentQuestion = document.getElementById("currentQuestion");
 const displayAnswers = document.getElementById("answerButtons");
@@ -180,147 +341,158 @@ const scoreElement = document.getElementById("Score");
 const scoreValue = document.getElementById("scoreValue");
 let currentQuestionIndex = 0;
 let score = 0;
-scoreValue.innerHTML = score;
-const startQuiz = () => {
+let biologyScore = 0;
+let physicsScore = 0;
+let chemistryScore = 0;
+let currentSubjectQuestions = [];
+let currentSubjectType = '';
+
+function startQuiz() {
   score = 0;
+  biologyScore = 0;
+  physicsScore = 0;
+  chemistryScore = 0;
   currentQuestionIndex = 0;
+  updateScores();
+  questionSection.classList.add('hidden');
+}
 
-  showBiology();
-  showChemistry();
-  showPhysics();
-};
-
-const resetState = () => {
-  next.style.display = "none";
-  scoreElement.style.display = "none";
-
+function resetState() {
   while (displayAnswers.firstChild) {
     displayAnswers.removeChild(displayAnswers.firstChild);
   }
-};
+}
 
-const showChemistry = () => {
+function showQuestion(question) {
+  currentQuestion.innerText = question.question;
   resetState();
-  const chemistryQuestions = Questions.filter((question) => {
-    if (question.label === "chemistry") {
-      currentSubject.innerHTML = question.label;
-      return question;
-    }
+  
+  question.answers.forEach(answer => {
+    const button = document.createElement('button');
+    button.innerText = answer.text;
+    button.classList.add(
+      'answer-btn',
+      'w-full',
+      'text-left',
+      'p-4',
+      'rounded-lg',
+      'bg-gray-700',
+      'text-gray-100',
+      'hover:bg-gray-600',
+      'transition-all',
+      'duration-200',
+      'font-medium',
+      'border',
+      'border-gray-600',
+      'hover:border-gray-500'
+    );
+    button.dataset.correct = answer.correct;
+    button.addEventListener('click', showAnswer);
+    displayAnswers.appendChild(button);
   });
+}
 
-  questionSection.style.display = "flex";
-  function showQuestion() {
-    const Question = chemistryQuestions[currentQuestionIndex];
-    currentQuestion.innerHTML =
-      currentQuestionIndex + 1 + ". " + Question.question;
+function showChemistry() {
+  currentSubjectType = 'chemistry';
+  currentSubjectQuestions = Questions.filter(q => q.label === 'chemistry');
+  currentQuestionIndex = 0;
+  currentSubject.innerHTML = '<h1>Chemistry</h1>';
+  questionSection.classList.remove('hidden');
+  showQuestion(currentSubjectQuestions[currentQuestionIndex]);
+}
 
-    Question.answers.forEach((answer) => {
-      const button = document.createElement("button");
-      button.innerHTML = answer.text;
-      button.classList.add("btn");
-      displayAnswers.appendChild(button);
+function showPhysics() {
+  currentSubjectType = 'physics';
+  currentSubjectQuestions = Questions.filter(q => q.label === 'physics');
+  currentQuestionIndex = 0;
+  currentSubject.innerHTML = '<h1>Physics</h1>';
+  questionSection.classList.remove('hidden');
+  showQuestion(currentSubjectQuestions[currentQuestionIndex]);
+}
 
-      if (answer.correct) {
-        button.dataset.correct = answer.correct;
-      }
-      button.addEventListener("click", showAnswer);
-      button.addEventListener("click", nextQuestion);
-    });
-  }
-  showQuestion();
-};
+function showBiology() {
+  currentSubjectType = 'biology';
+  currentSubjectQuestions = Questions.filter(q => q.label === 'biology');
+  currentQuestionIndex = 0;
+  currentSubject.innerHTML = '<h1>Biology</h1>';
+  questionSection.classList.remove('hidden');
+  showQuestion(currentSubjectQuestions[currentQuestionIndex]);
+}
 
-const showPhysics = () => {
-  resetState();
-  const physicsQuestions = Questions.filter((question) => {
-    if (question.label === "physics") {
-      currentSubject.innerHTML = question.label;
-      return question;
-    }
-  });
-  showQuestion();
-  questionSection.style.display = "flex";
-  function showQuestion() {
-    resetState();
+function updateScores() {
+  document.getElementById('biology-score').innerText = `Biology: ${biologyScore}`;
+  document.getElementById('physics-score').innerText = `Physics: ${physicsScore}`;
+  document.getElementById('chemistry-score').innerText = `Chemistry: ${chemistryScore}`;
+  scoreValue.innerText = biologyScore + physicsScore + chemistryScore;
+}
 
-    const Question = physicsQuestions[currentQuestionIndex];
-    currentQuestion.innerHTML =
-      currentQuestionIndex + 1 + ". " + Question.question;
-    Question.answers.forEach((answer) => {
-      const button = document.createElement("button");
-      button.innerHTML = answer.text;
-      button.classList.add("btn");
-      displayAnswers.appendChild(button);
-
-      if (answer.correct) {
-        button.dataset.correct = answer.correct;
-      }
-      button.addEventListener("click", showAnswer);
-      button.addEventListener("click", nextQuestion);
-    });
-  }
-};
-
-const showBiology = () => {
-  resetState();
-  const biologyQuestions = Questions.filter((question) => {
-    if (question.label === "biology") {
-      currentSubject.innerHTML = question.label;
-      return question;
-    }
-  });
-
-  showQuestion();
-  questionSection.style.display = "flex";
-  function showQuestion() {
-    resetState();
-    const Question = biologyQuestions[currentQuestionIndex];
-
-    currentQuestion.innerHTML =
-      currentQuestionIndex + 1 + ". " + Question.question;
-
-    Question.answers.forEach((answer) => {
-      const button = document.createElement("button");
-      button.innerHTML = answer.text;
-      button.classList.add("btn");
-      displayAnswers.appendChild(button);
-
-      if (answer.correct) {
-        button.dataset.correct = answer.correct;
-      }
-      button.addEventListener("click", showAnswer);
-    });
-  }
-};
 function showAnswer(e) {
-  const selectedAnswer = e.target;
-  const isCorrect = selectedAnswer.dataset.correct === "true";
-  if (isCorrect) {
-    selectedAnswer.classList.add("correct");
-    score++;
-  } else {
-    selectedAnswer.classList.add("incorrect");
-  }
-  Array.from(displayAnswers.children).forEach((button) => {
-    if (button.dataset.correct === "true") {
-      button.classList.add("correct");
-    }
+  const selectedButton = e.target;
+  const correct = selectedButton.dataset.correct === 'true';
+  const buttons = document.querySelectorAll('#answerButtons button');
+  
+  buttons.forEach(button => {
     button.disabled = true;
+    if (button.dataset.correct === 'true') {
+      button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+      button.classList.add('bg-green-600', 'text-white', 'border-green-500');
+    } else {
+      button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+      button.classList.add('bg-red-600', 'text-white', 'border-red-500', 'opacity-70');
+    }
   });
-  selectedAnswer.addEventListener("click", nextQuestion);
+
+  if (correct) {
+    if (currentSubjectType === 'biology') biologyScore++;
+    else if (currentSubjectType === 'physics') physicsScore++;
+    else if (currentSubjectType === 'chemistry') chemistryScore++;
+    updateScores();
+  }
+  
+  // Enable the next button after answering
+  next.disabled = false;
+  next.classList.remove('opacity-50');
 }
 
 function nextQuestion() {
   currentQuestionIndex++;
-  if (currentQuestionIndex < Questions.label === "biology") {
-    showBiology();
-    scoreElement.style.display = "block";
+  if (currentQuestionIndex < currentSubjectQuestions.length) {
+    showQuestion(currentSubjectQuestions[currentQuestionIndex]);
   } else {
-    startQuiz();
+    currentQuestion.innerHTML = "You've completed this section!";
+    displayAnswers.innerHTML = '';
+    const restartButton = document.createElement('button');
+    restartButton.innerText = 'Try Another Subject';
+    restartButton.classList.add(
+      'w-full',
+      'text-center',
+      'p-4',
+      'rounded-lg',
+      'bg-blue-600',
+      'text-white',
+      'hover:bg-blue-500',
+      'transition-all',
+      'duration-200',
+      'font-medium',
+      'mt-4'
+    );
+    restartButton.addEventListener('click', () => {
+      questionSection.classList.add('hidden');
+      currentQuestionIndex = 0;
+    });
+    displayAnswers.appendChild(restartButton);
   }
 }
 
+// Add event listener for the next button
+next.addEventListener('click', () => {
+  if (currentQuestionIndex < currentSubjectQuestions.length) {
+    nextQuestion();
+  }
+});
+
 startQuiz();
-chemistryButton.addEventListener("click", showChemistry);
-physicsButton.addEventListener("click", showPhysics);
-biologyButton.addEventListener("click", showBiology);
+
+chemistryButton.addEventListener('click', showChemistry);
+physicsButton.addEventListener('click', showPhysics);
+biologyButton.addEventListener('click', showBiology);
